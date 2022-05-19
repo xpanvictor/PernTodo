@@ -16,6 +16,8 @@
     "rules": {
         "no-unused-vars": "warn",
         "no-multiple-empty-lines": "off",
-        "func-names": "off"
+        "func-names": "off",
+        "camelcase": "off",
+        "object-curly-newline": "off"
     }
 }
