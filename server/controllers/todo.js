@@ -8,13 +8,31 @@ class Todo {
     this.next = next;
   }
 
+  checkRes(data) {
+    if (data.rowCount === 0) {
+      return this.next(customError.NotFound("The data can't be found"));
+    }
+    return this.res.json(data.rows);
+  }
+
+  // GET all todo
   async GetAll() {
     await connectDB
       .query('SELECT * FROM todo')
-      .then((data) => this.res.json(data.rows))
+      .then((data) => this.checkRes(data))
       .catch((err) => this.next(customError.databaseErr(err.errno, err.code)));
   }
 
+  // GET one todo
+  async GetOne() {
+    const { tid } = this.req.params;
+    await connectDB
+      .query('SELECT * FROM todo WHERE tid = $1', [tid])
+      .then((data) => this.checkRes(data))
+      .catch((err) => this.next(customError.databaseErr(err.errno, err.code)));
+  }
+
+  // POST one todo
   async PostOne() {
     const { todo_name, scale, due_time, description } = this.req.body;
     if (!todo_name) {

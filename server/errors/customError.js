@@ -11,6 +11,10 @@ class CustomError {
   static databaseErr(code, msg) {
     return new CustomError(500, `${msg} with code ${code}`);
   }
+
+  static NotFound(msg) {
+    return new CustomError(400, msg);
+  }
 }
 
 module.exports = CustomError;
