@@ -1,5 +1,5 @@
 const express = require('express');
-const router = require('./router');
+const todoRouter = require('./routes/todo');
 const ApiErrorHandler = require('./middlewares/ApiErrorHandler');
 
 const app = express();
@@ -7,7 +7,7 @@ const app = express();
 // Middlewares
 app.use(express.json());
 // Routing
-app.use('/api/', router);
+app.use('/api/todo', todoRouter);
 
 app.use(ApiErrorHandler); // API error handling
 const port = process.env.PORT || 5000;

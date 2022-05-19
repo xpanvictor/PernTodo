@@ -8,8 +8,11 @@ class Todo {
     this.next = next;
   }
 
-  GetAll() {
-    this.res.send(this.req.headers);
+  async GetAll() {
+    await connectDB
+      .query('SELECT * FROM todo')
+      .then((data) => this.res.json(data.rows))
+      .catch((err) => this.next(customError.databaseErr(err.errno, err.code)));
   }
 
   async PostOne() {
@@ -23,14 +26,14 @@ class Todo {
         'INSERT INTO todo (todo_name, scale, due_time, description) VALUES ($1, $2, $3, $4) RETURNING tid',
         [todo_name, scale, due_time, description],
       )
-      .then((data) => this.res.json(data.rows))
+      .then((data) => this.res.json(data.rows[0]))
       .catch((err) => this.next(customError.databaseErr(err.errno, err.code)));
   }
 
-  async DropTable() {
+  async DropAll() {
     await connectDB
-      .query('DROP TABLE IF_EXIST todo RETURNING *')
-      .then((data) => this.res.json(data.rows))
+      .query('TRUNCATE TABLE todo')
+      .then((data) => this.res.json(data))
       .catch((err) => this.next(customError.databaseErr(err.errno, err.code)));
   }
 }
