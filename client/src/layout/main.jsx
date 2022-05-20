@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { TodoContext } from '../context/todo';
 
 
-import { Nav } from '../components'
+import { Nav, Footer } from '../components'
 
 function Main(props) {
   const {theme, setTheme} = useContext(TodoContext);
@@ -10,10 +10,12 @@ function Main(props) {
       setTheme((theme==='dark') ? 'light' : 'dark')
   }
   return (
-      <div data-theme={theme} className='h-screen'>
+      <div data-theme={theme} className='flex flex-col h-screen'>
           <Nav theme={theme} handleTheme={handleTheme} />
+          <div className="mb-auto p-4">
           {props.children}
-          <div className="">Footer</div>
+          </div>
+          <Footer />
       </div>    
   )
 }

@@ -1,5 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+// Pages
+import Home from './pages/home';
+
 import Main from './layout/main';
 
 function App() {
@@ -7,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Main>
         <Routes>
-          <Route path='/' element={<h1 className='nav'>Hello world</h1>} />
+          <Route path='/' element={<Home />} />
         </Routes>
       </Main>
     </BrowserRouter>
