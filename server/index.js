@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const todoRouter = require('./routes/todo');
 const ApiErrorHandler = require('./middlewares/ApiErrorHandler');
