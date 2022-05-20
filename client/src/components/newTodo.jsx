@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
 import DateTimePicker from 'react-datetime-picker'
 
-function NewTodo() {
+import Card from './card'
+
+function NewTodo(props) {
 
   const [clock, setClock] = useState(false)
 
@@ -10,7 +12,7 @@ function NewTodo() {
       alert(e.target)
   }
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
+    <Card w={props.w}>
     <form className="card-body py-1 items-center bg-primary px-1" onSubmit={handleSubmit}>
         <h2 className="card-title mb-0 p-0">Add new todo
         <a className="btn btn-sm" onClick={()=>setClock((clock) ? false : true)}>
@@ -37,7 +39,7 @@ function NewTodo() {
         <button type='submit' className="btn">Button</button>
         </div>
     </form>
-    </div>
+    </Card>
   )
 }
 
