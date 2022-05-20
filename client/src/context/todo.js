@@ -4,9 +4,10 @@ export const TodoContext = createContext();
 
 export const TodoContextProvider = (props) => {
   const [todolist, setTodolist] = useState([]);
+  const [theme, setTheme] = useState('dark');
 
   return (
-    <TodoContext.Provider value={{ todolist, setTodolist }}>
+    <TodoContext.Provider value={{ theme, setTheme, todolist, setTodolist }}>
       {props.children}
     </TodoContext.Provider>
   );

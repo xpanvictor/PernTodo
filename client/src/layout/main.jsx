@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { TodoContext } from '../context/todo';
+
+
+import { Nav } from '../components'
 
 function Main(props) {
+  const {theme} = useContext(TodoContext);
   return (
-      <React.Fragment>
-          <div className="">Nav</div>
+      <div data-theme={theme} className='h-screen'>
+          <Nav />
           {props.children}
           <div className="">Footer</div>
-      </React.Fragment>    
+      </div>    
   )
 }
 
