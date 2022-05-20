@@ -48,6 +48,30 @@ class Todo {
       .catch((err) => this.next(customError.databaseErr(err.errno, err.code)));
   }
 
+  // PUT one todo
+  async PutOne() {
+    const { tid } = this.req.params;
+    const { todo_name, scale, due_time, description } = this.req.body;
+
+    await connectDB
+      .query(
+        'UPDATE todo SET (todo_name, scale, due_time, description) = ($1, $2, $3, $4) where tid = $5',
+        [todo_name, scale, due_time, description, tid],
+      )
+      .then(() => this.res.status(201).json('Updated successfully'))
+      .catch((err) => this.next(customError.databaseErr(err.code, err.error)));
+  }
+
+  async DeleteOne() {
+    const { tid } = this.req.params;
+    await connectDB
+      .query('DELETE FROM todo where tid = $1', [tid])
+      .then(() => {
+        this.res.status(201).json('Success in deleting');
+      })
+      .catch((err) => this.next(customError.databaseErr(err.code, err.error)));
+  }
+
   async DropAll() {
     await connectDB
       .query('TRUNCATE TABLE todo')
