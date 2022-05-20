@@ -5,10 +5,13 @@ import { TodoContext } from '../context/todo';
 import { Nav } from '../components'
 
 function Main(props) {
-  const {theme} = useContext(TodoContext);
+  const {theme, setTheme} = useContext(TodoContext);
+  const handleTheme = () => {
+      setTheme((theme==='dark') ? 'light' : 'dark')
+  }
   return (
       <div data-theme={theme} className='h-screen'>
-          <Nav />
+          <Nav theme={theme} handleTheme={handleTheme} />
           {props.children}
           <div className="">Footer</div>
       </div>    
