@@ -1,16 +1,28 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import DateTimePicker from 'react-datetime-picker'
+import Call from '../async/call'
+import { TodoContext } from '../context/todo'
 
 import Card from './card'
 
 function NewTodo(props) {
 
+  const {setPresent} = useContext(TodoContext)
+
   const [clock, setClock] = useState(false)
+
+  const [body, setBody] = useState({})
 
   const handleSubmit = (e) => {
       e.preventDefault()
-      alert(e.target)
+      async function Send(){
+        await Call.post('/', body)
+        .then((data)=>setPresent(true))
+        .catch(err=>alert(err.response.data))
+      }
+      Send()
   }
+
   return (
     <Card w={props.w}>
     <form className="card-body py-1 items-center bg-primary px-1" onSubmit={handleSubmit}>
@@ -22,21 +34,21 @@ function NewTodo(props) {
         <div className="flex py-0 flex-col md:flex-row">
             <div className="form-control">
             <label htmlFor="todo_name" className="label">Todo name</label>
-            <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full max-w-xs" name='todo_name' />
+            <input type="text" onChange={(e)=>setBody(Object.assign(body, {todo_name:e.target.value}))} placeholder="Type here" className="input input-bordered input-primary w-full max-w-xs" name='todo_name' />
             </div>
         </div>
 
         {clock && (<div >
-            <DateTimePicker className="input p-0 input-bordered input-primary"/>
+            <DateTimePicker onChange={(e)=>setBody(Object.assign(body, {due_date: e}))} className="input p-0 input-bordered input-primary"/>
         </div>)}
 
         <div className="form-control">
         <label htmlFor="todo_name" className="label">Description</label>
-        <textarea className="textarea textarea-primary" name='description' placeholder="Can add a detailed description"></textarea>
+        <textarea onChange={(e)=>setBody(Object.assign(body, {description:e.target.value}))} className="textarea textarea-primary" name='description' placeholder="Can add a detailed description"></textarea>
         </div>
         </div>
         <div className="align-center">
-        <button type='submit' className="btn">Button</button>
+        <button type='submit' className="btn">Submit</button>
         </div>
     </form>
     </Card>

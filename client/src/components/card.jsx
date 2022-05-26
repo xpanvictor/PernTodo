@@ -2,7 +2,7 @@ import React from 'react'
 
 function Card(props) {
   return (
-    <div className={`card ${props.w} bg-base-100 shadow-xl`}>
+    <div className={`card w-auto bg-base-100 shadow-xl`}>
         {props.children}
     </div>
   )

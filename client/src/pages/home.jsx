@@ -1,27 +1,35 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { TodoContext } from '../context/todo';
+
+import Call from '../async/call'
+
 import Top from '../layout/top'
 import Below from '../layout/below'
-import { NewTodo, Profile } from '../components'
+import { NewTodo, Profile, List } from '../components'
 
 function Home() {
+  const {setTodolist, present} = useContext(TodoContext)
+
+  useEffect(()=>{
+    async function Request(){
+      await Call.get('/')
+      .then(data=>setTodolist(data.data))
+      .catch(err=>console.log(err))
+    }
+    Request()
+  }, [present])
+
   return (
-    <React.Fragment>
+    <div className='flex flex-col'>
       <Top>
         <NewTodo w='w-96' />
         <Profile w='w-auto' prog={45}/>
-    </Top>
+      </Top>
     
-    <Below>
-      <div className="overflow-x-auto">
-      <ul class="steps steps-vertical md:steps-horizontal">
-        <li class="step step-primary">Register</li>
-        <li class="step step-primary">Choose plan</li>
-        <li class="step">Purchase</li>
-        <li class="step">Receive Product</li>
-      </ul>
-      </div>
-    </Below>
-    </React.Fragment>
+      <Below>
+        <List />
+      </Below>
+    </div>
   )
 }
 

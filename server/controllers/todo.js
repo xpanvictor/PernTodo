@@ -34,6 +34,7 @@ class Todo {
 
   // POST one todo
   async PostOne() {
+    console.log(this.req.body);
     const { todo_name, scale, due_time, description } = this.req.body;
     if (!todo_name) {
       this.next(customError.badRequest('Todo name must be defined'));

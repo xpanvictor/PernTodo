@@ -1,12 +1,16 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const todoRouter = require('./routes/todo');
 const ApiErrorHandler = require('./middlewares/ApiErrorHandler');
+const Logger = require('./middlewares/logger');
 
 const app = express();
 
 // Middlewares
 app.use(express.json());
+app.use(cors());
+app.use(Logger);
 // Routing
 app.use('/api/todo', todoRouter);
 

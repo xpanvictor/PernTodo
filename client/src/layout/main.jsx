@@ -10,10 +10,10 @@ function Main(props) {
       setTheme((theme==='dark') ? 'light' : 'dark')
   }
   return (
-      <div data-theme={theme} className='flex flex-col h-screen'>
+      <div data-theme={theme} className='relative md:h-screen'>
           <Nav theme={theme} handleTheme={handleTheme} />
-          <div className="mb-auto p-4">
-          {props.children}
+          <div className="p-4">
+            {props.children}
           </div>
           <Footer />
       </div>    
